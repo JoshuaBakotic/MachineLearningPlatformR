@@ -31,31 +31,25 @@ ui <- fluidPage(
                
                tabPanel("Database/File setup",
                         fluidPage(
-                            sidebarLayout(
-                                sidebarPanel(
+                            sidebarLayout(position = 'left',
+                                sidebarPanel("DataInput",
                                     selectInput("Data_Input",
-                                              "Search Twitter for:",
+                                              "Dataformat to be loaded:",
                                               c("File_upload","DataBase")),
-                                    selectInput("File type", "Number of Tweets:",
-                                                choices = Fileupload),
-                                    
-                                    textInput("server_name", "Server Name",
-                                                  ),
-                                    textInput("Database", "Database Name",
-                                    ),
-                                    
-                                    textInput("Query", "Query to execute",
-                                    ),
-                                    actionButton("additional_data", "Load an additional data table"
-                                    ),
-                                    actionButton("update", "Run/Connect")
-                                ),
-                                
-                                mainPanel(verbatimTextOutput("summary"),
-                                          tableOutput("view")
+                                    selectInput("File", "DataBase:",
+                                                choices = Fileupload)
+                                            ),
+                                    mainPanel(
+                                    tabsetPanel(id = 'Initial_data',
+                                                tabPanel("diamonds"),
+                                                tabPanel("mtcars"),
+                                                tabPanel("iris")
+                                                )
+                                             )
+                                        )
                                 )
-                            )
-                        )),
+                     )
+            ,
                #####PreProccessing Tab#####
                navbarMenu("Pre-Proccessing",
                tabPanel("Pre Analysis/Statisitcs",
