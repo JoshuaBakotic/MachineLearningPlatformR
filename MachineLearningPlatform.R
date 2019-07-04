@@ -41,9 +41,10 @@ ui <- fluidPage(
                                             ),
                                     mainPanel(
                                     tabsetPanel(id = 'Initial_data',
-                                                tabPanel("diamonds"),
-                                                tabPanel("mtcars"),
-                                                tabPanel("iris")
+                                                tabPanel("Database Upload",tableOutput("Database view")),
+                                                tabPanel("File Upload",tableOutput("File view")),
+                                                tabPanel("Summary View",tableOutput("Summary view")),
+                                                tabPanel("Pre-Cleaning",tableOutput("Pre-Cleaning view"))
                                                 )
                                              )
                                         )
