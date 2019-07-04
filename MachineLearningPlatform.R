@@ -59,8 +59,7 @@ ui <- fluidPage(
                                 selectInput("features",
                                             "Data columns",
                                             "features"),
-                                selectInput("investigation_type", "Univaraite/Parwise",
-                                            choices = c("Univaraite","Parewise")),
+                                
                                 selectInput("investigation", "Plot",
                                             choices = c('BoxPlot','Histogram','Bar Graph','Column Graph','Scatter')),
                                 selectInput("investigation", "X",
@@ -76,12 +75,42 @@ ui <- fluidPage(
                             
                             mainPanel(verbatimTextOutput("summary"),
                                       tableOutput("view"),
-                                      tableOutput("view"),
+                                      tableOutput("view")
                                       
                                         )
                                     )
                                 )
                         ),
+               tabPanel("Graphical Analytics",
+                        fluidPage(sidebarLayout(
+                            sidebarPanel(
+                                selectInput("Feature/Features",
+                                            "Data columns",
+                                            "features"),
+                                
+                                selectInput("PlotType", "Plot Type",
+                                            choices = c('BoxPlot','Histogram','Bar Graph','Column Graph','Scatter')),
+                                selectInput("univariate", "Feature",
+                                            choices = c('BoxPlot','Histogram','Bar Graph','Column Graph')),
+                                selectInput("investigation_x", "X",
+                                            choices = c('BoxPlot','Histogram','Bar Graph','Column Graph')),
+                                selectInput("investigation_y", "Y",
+                                            choices = c('BoxPlot','Histogram','Bar Graph','Column Graph')),
+                                
+                                
+                                
+                                
+                                actionButton("update", "Update")
+                            ),
+                            
+                            mainPanel(verbatimTextOutput("summary"),
+                                      tableOutput("view"),
+                                      tableOutput("view")
+                                      
+                            )
+                        )
+                        )
+               ),
                tabPanel("Univariate analytics",
                         fluidPage(sidebarLayout(
                             sidebarPanel(
@@ -156,6 +185,37 @@ ui <- fluidPage(
                              )
                          )
                          )
+               ),
+               tabPanel("Normalisation and Transformation",
+                        fluidPage(sidebarLayout(
+                            sidebarPanel(
+                                selectInput("variables",
+                                            "Features",
+                                            c("f1","f2","f3")),
+                                selectInput("Transformation", "Transformation Technique",
+                                            choices = c("Normalise","Standardise")),
+                                selectInput("Normalise_method", "Normalise Technique",
+                                            choices = c("max/min","Histogram","Bar Graph","Column Graph")),
+                                selectInput("Standardise_method", "Standardise Technique",
+                                            choices = c("Best Methode","Histogram","Bar Graph","Column Graph")),
+                                
+                                
+                                checkboxInput("Normalise_summary","Normalise Summary",value = FALSE),
+                                checkboxInput("Standardise_summary","Normalise Summary",value = FALSE),
+                                
+                                
+                                
+                                
+                                actionButton("Update", "Update")
+                            ),
+                            
+                            mainPanel(verbatimTextOutput("summary"),
+                                      tableOutput("view"),
+                                      plotOutput("HistOld"),
+                                      plotOutput("HistTransfomed")
+                            )
+                        )
+                        )
                ),
                tabPanel("Data Selection",
                         fluidPage(sidebarLayout(
