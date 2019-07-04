@@ -52,7 +52,7 @@ ui <- fluidPage(
                      )
             ,
                #####PreProccessing Tab#####
-               navbarMenu("Pre-Proccessing",
+               navbarMenu("Data/Cleaning - Visual plots",
                tabPanel("Pre Analysis/Statisitcs",
                         fluidPage(sidebarLayout(
                             sidebarPanel(
@@ -75,7 +75,9 @@ ui <- fluidPage(
                             ),
                             
                             mainPanel(verbatimTextOutput("summary"),
-                                      tableOutput("view")
+                                      tableOutput("view"),
+                                      tableOutput("view"),
+                                      
                                         )
                                     )
                                 )
