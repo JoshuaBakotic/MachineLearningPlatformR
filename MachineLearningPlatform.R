@@ -8,6 +8,9 @@
 #
 
 library(shiny)
+library(ggplot2)
+library(dplyr)
+library(readxl)
 
 pcalist <- c('PC1','PC2','PC3','PC4','PC5')
 Fileupload <- c('csv','xlsx','xls','other/forgein')
@@ -31,19 +34,24 @@ ui <- fluidPage(
                
                tabPanel("Database/File setup",
                         fluidPage(
-                            sidebarLayout(position = 'left',
-                                sidebarPanel("DataInput",
-                                    selectInput("Data_Input",
-                                              "Dataformat to be loaded:",
-                                              c("File_upload","DataBase")),
-                                    selectInput("File", "DataBase:",
-                                                choices = Fileupload)
+                            sidebarLayout(
+                                    position = 'left',
+                                    sidebarPanel("DataInput",
+                                    checkboxInput("Database_Input","Database",FALSE),
+                                    checkboxInput("file_Input","File",FALSE),
+                                    selectInput("databaseformat","Database format",choices = data_base_connections),
+                                    textInput("dbserver", "Servername",value=""),
+                                    textInput("dbname", "dbname",value =""),
+                                    fileInput("fileupload", "file",multiple = FALSE,accept = c("text/csv",
+                                                                                               "text/comma-separated-values,text/plain",
+                                                                                               ".csv"),buttonLabel = "Upload file")
                                             ),
                                     mainPanel(
                                     tabsetPanel(id = 'Initial_data',
-                                                tabPanel("Database Upload",tableOutput("Database view")),
-                                                tabPanel("File Upload",tableOutput("File view")),
-                                                tabPanel("Summary View",tableOutput("Summary view")),
+                                                tabPanel("Database Upload",value="dbload"),
+                                                tabPanel("Database Upload",value="dbload",tableOutput("Database view")),
+                                                tabPanel("File Upload",value="fileloadload",tableOutput("File view")),
+                                                tabPanel("Summary View",DT::dataTableOutput("Summary view")),
                                                 tabPanel("Pre-Cleaning",tableOutput("Pre-Cleaning view"))
                                                 )
                                              )
@@ -56,16 +64,14 @@ ui <- fluidPage(
                tabPanel("Pre Analysis/Statisitcs",
                         fluidPage(sidebarLayout(
                             sidebarPanel(
-                                selectInput("features",
-                                            "Data columns",
-                                            "features"),
-                                
                                 selectInput("investigation", "Plot",
                                             choices = c('BoxPlot','Histogram','Bar Graph','Column Graph','Scatter')),
-                                selectInput("investigation", "X",
+                                selectInput("investigationx", "X",
                                             choices = c('BoxPlot','Histogram','Bar Graph','Column Graph')),
-                                selectInput("investigation", "Y",
+                                selectInput("investigationy", "Y",
                                             choices = c('BoxPlot','Histogram','Bar Graph','Column Graph')),
+                                checkboxInput("summary", "Summary View",
+                                            value = T),
                                 
                                 
                                 
